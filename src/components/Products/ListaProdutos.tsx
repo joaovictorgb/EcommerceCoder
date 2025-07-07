@@ -1,60 +1,46 @@
 'use client';
 
-import ProdutoCard, { Produto } from './ProdutoCard';
+import React from 'react';
+import ProdutoCard from './ProdutoCard';
 
-interface ListaProdutosProps {
-  aoAdicionarAoCarrinho: (produto: Produto) => void;
-}
-
-// Produtos fixos para demonstração
-const produtos: Produto[] = [
+// Dados simulados de produtos
+const produtos = [
   {
-    id: 1,
-    nome: 'Notebook Pro',
-    preco: 4999.99,
-    imagem: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=500&q=80',
-    descricao: 'Notebook de última geração com processador de alta performance.',
-  },
-  {
-    id: 2,
-    nome: 'Smartphone X',
+    id: '1',
+    nome: 'Smartphone Premium',
     preco: 2499.99,
-    imagem: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80',
-    descricao: 'Smartphone com câmera de alta resolução e bateria de longa duração.',
+    descricao: 'O mais avançado smartphone com câmera de última geração',
+    imagem: '/produtos/produto1.jpg'
   },
   {
-    id: 3,
-    nome: 'Fone de Ouvido Wireless',
-    preco: 299.99,
-    imagem: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
-    descricao: 'Fone de ouvido sem fio com cancelamento de ruído ativo.',
+    id: '2',
+    nome: 'Notebook Profissional',
+    preco: 4999.99,
+    descricao: 'Notebook de alto desempenho para profissionais',
+    imagem: '/produtos/produto2.jpg'
   },
   {
-    id: 4,
-    nome: 'Relógio Inteligente',
+    id: '3',
+    nome: 'Smartwatch Elite',
     preco: 899.99,
-    imagem: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80',
-    descricao: 'Relógio inteligente com monitor cardíaco e GPS integrado.',
+    descricao: 'Monitore sua saúde com estilo',
+    imagem: '/produtos/produto3.jpg'
   },
+  {
+    id: '4',
+    nome: 'Fones Bluetooth',
+    preco: 299.99,
+    descricao: 'Som cristalino e cancelamento de ruído',
+    imagem: '/produtos/produto4.jpg'
+  }
 ];
 
-export default function ListaProdutos({ aoAdicionarAoCarrinho }: ListaProdutosProps) {
+export default function ListaProdutos() {
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-light text-center mb-2">Nossa Coleção</h2>
-        <p className="text-gray-500 text-center mb-12">Produtos selecionados para você</p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {produtos.map((produto) => (
-            <ProdutoCard
-              key={produto.id}
-              produto={produto}
-              aoAdicionarAoCarrinho={aoAdicionarAoCarrinho}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {produtos.map((produto) => (
+        <ProdutoCard key={produto.id} produto={produto} />
+      ))}
+    </div>
   );
 } 

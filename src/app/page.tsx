@@ -7,6 +7,7 @@ import ListaProdutos from '@/components/Products/ListaProdutos';
 import Carrinho from '@/components/Cart/Carrinho';
 import Rodape from '@/components/Footer/Rodape';
 import { Produto } from '@/components/Products/ProdutoCard';
+import Link from 'next/link';
 
 // Interface que estende Produto para incluir quantidade
 interface ItemCarrinho extends Produto {
@@ -17,7 +18,7 @@ interface ItemCarrinho extends Produto {
  * Página principal da aplicação
  * Gerencia o estado do carrinho e a integração entre os componentes
  */
-export default function PaginaInicial() {
+export default function Home() {
   // Estados
   const [carrinhoAberto, setCarrinhoAberto] = useState(false);
   const [itensCarrinho, setItensCarrinho] = useState<ItemCarrinho[]>([]);
@@ -68,20 +69,59 @@ export default function PaginaInicial() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Cabecalho
-        quantidadeItensCarrinho={itensCarrinho.reduce((soma, item) => soma + item.quantidade, 0)}
-        aoClicarCarrinho={() => setCarrinhoAberto(true)}
-      />
+    <div className="min-h-screen bg-gray-50">
       <Destaque />
-      <ListaProdutos aoAdicionarAoCarrinho={aoAdicionarAoCarrinho} />
-      <Carrinho
-        aberto={carrinhoAberto}
-        aoFechar={() => setCarrinhoAberto(false)}
-        itens={itensCarrinho}
-        aoAtualizarQuantidade={aoAtualizarQuantidade}
-        aoRemoverItem={aoRemoverItem}
-      />
+      <main className="container mx-auto px-4 py-12">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Produtos em Destaque</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Descubra nossa seleção especial de produtos premium, cuidadosamente escolhidos para você.
+          </p>
+        </div>
+        
+        {/* Grade de categorias */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {['Eletrônicos', 'Moda', 'Casa'].map((categoria) => (
+            <div key={categoria} className="relative overflow-hidden rounded-lg shadow-lg group">
+              <div className="aspect-w-16 aspect-h-9 bg-gradient-to-r from-blue-500 to-purple-500">
+                <div className="p-6 flex items-center justify-center">
+                  <h3 className="text-xl font-semibold text-gray-900 group-hover:scale-110 transition-transform duration-300">
+                    {categoria}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Lista de produtos */}
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          <ListaProdutos />
+        </div>
+
+        {/* Seção de benefícios */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+          {[
+            {
+              titulo: 'Entrega Rápida',
+              descricao: 'Receba seus produtos em até 2 dias úteis'
+            },
+            {
+              titulo: 'Pagamento Seguro',
+              descricao: 'Suas transações sempre protegidas'
+            },
+            {
+              titulo: 'Suporte 24/7',
+              descricao: 'Estamos sempre prontos para ajudar'
+            }
+          ].map((beneficio) => (
+            <div key={beneficio.titulo} className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{beneficio.titulo}</h3>
+              <p className="text-gray-600">{beneficio.descricao}</p>
+            </div>
+          ))}
+        </div>
+      </main>
       <Rodape />
     </div>
   );
